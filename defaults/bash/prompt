@@ -1,7 +1,30 @@
-# Technicolor dreams
+# filepath: /home/rs/Dev/OmakubMod/omakub_mod/defaults/bash/prompt
+# Enhanced prompt with directory and git branch awareness
 force_color_prompt=yes
 color_prompt=yes
 
-# Simple prompt with path in the window/pane title and caret for typing line
-PS1=$'\uf0a9 '
+# Colors
+RESET='\[\033[0m\]'
+BOLD='\[\033[1m\]'
+DIM='\[\033[2m\]'
+
+# Foreground colors
+BLUE='\[\033[34m\]'
+CYAN='\[\033[36m\]'
+GREEN='\[\033[32m\]'
+YELLOW='\[\033[33m\]'
+RED='\[\033[31m\]'
+
+# Git branch function
+__git_branch() {
+  local branch=$(git branch 2>/dev/null | grep "^\*" | sed 's/* //')
+  if [ -n "$branch" ]; then
+    echo " ${YELLOW}[${branch}]${RESET}"
+  fi
+}
+
+# Build the prompt
+PS1="${BLUE}⮩${RESET} ${CYAN}\w${RESET}\$(__git_branch) ${GREEN}❯${RESET} "
+
+# Set window title to current directory
 PS1="\[\e]0;\w\a\]$PS1"

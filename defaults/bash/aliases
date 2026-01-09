@@ -25,3 +25,23 @@ alias lzd='lazydocker'
 alias gcm='git commit -m'
 alias gcam='git commit -a -m'
 alias gcad='git commit -a --amend'
+
+# System
+alias c='clear'
+alias reload='source ~/.bashrc'
+alias nvbashrc='nvim ~/.bashrc'
+alias update='sudo apt update && sudo apt upgrade -y && flatpak update -y'
+alias shutdown='sudo shutdown now'
+alias restart='sudo reboot'
+
+# File Operations
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias mkdir='mkdir -pv'
+alias rmdir='rmdir --ignore-fail-on-non-empty'
+alias zipdir='zip -r'
+alias mkcd='mkdir -p "$1" && cd "$1"'
+alias path='echo -e ${PATH//:/\\n}'
+
+alias work='cd ~/Dev && ls'

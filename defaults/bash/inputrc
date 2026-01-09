@@ -28,6 +28,15 @@ set completion-query-items 200
 # Show extra file information when completing, like `ls -F` does
 set visible-stats on
 
+# Bell settings - Reduce annoying beeping
+set bell-style none
+
+# Expand tilde (~) on tab completion
+set expand-tilde on
+
+# Allow 8-bit input/output for better terminal support
+set enable-bracketed-paste on
+
 $if Bash
   # Be more intelligent when autocompleting by also looking at the text after
   # the cursor. For example, when the current line is "cd ~/src/mozil", and

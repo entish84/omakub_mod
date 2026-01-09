@@ -1,12 +1,59 @@
+// ===== Theme & UI =====
 theme "tokyo-night"
 default_layout "compact"
 on_force_close "quit"
 
+// ===== Appearance =====
+ui {
+    pane_frame_corners "round"
+    pane_frame_rounded_corners true
+}
+
+// ===== Default Mode & Behavior =====
 default_mode "locked"
+
+// ===== Status Bar Customization =====
+status_bar {
+    rounded_corners true
+    hide_core_on_conflict false
+}
+
+// ===== Session Configuration =====
+session_serialization true
+scrollback_size_kb 3000
+
+// ===== Mouse Support =====
+mouse {
+    mode "normal"
+}
+
+// ===== Keybindings =====
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
+        // Quick access to common functions
+        bind "Ctrl l" { SwitchToMode "normal"; }  // Alternative unlock
     }
+
+    normal {
+        // Quick navigation (without needing pane mode)
+        bind "Alt h" { MoveFocus "left"; }
+        bind "Alt j" { MoveFocus "down"; }
+        bind "Alt k" { MoveFocus "up"; }
+        bind "Alt l" { MoveFocus "right"; }
+
+        // Quick pane creation
+        bind "Ctrl n" { NewPane; SwitchToMode "locked"; }
+        bind "Ctrl d" { NewPane "down"; SwitchToMode "locked"; }
+        bind "Ctrl e" { NewPane "right"; SwitchToMode "locked"; }
+
+        // Quick tab creation
+        bind "Ctrl t" { NewTab; SwitchToMode "locked"; }
+
+        // Exit to locked mode
+        bind "Ctrl g" { SwitchToMode "locked"; }
+    }
+
     pane {
         bind "Left" { MoveFocus "left"; }
         bind "Down" { MoveFocus "down"; }
@@ -21,13 +68,18 @@ keybinds clear-defaults=true {
         bind "k" { MoveFocus "up"; }
         bind "l" { MoveFocus "right"; }
         bind "n" { NewPane; SwitchToMode "locked"; }
+        bind "o" { ToggleFocusFullscreen; SwitchToMode "locked"; }  // Extra fullscreen toggle
         bind "p" { SwitchToMode "normal"; }
+        bind "q" { CloseFocus; SwitchToMode "locked"; }  // Intuitive close
         bind "r" { NewPane "right"; SwitchToMode "locked"; }
+        bind "s" { NewPane "down"; SwitchToMode "locked"; }  // Split down (vim-like)
+        bind "v" { NewPane "right"; SwitchToMode "locked"; }  // Split right (vim-like)
         bind "w" { ToggleFloatingPanes; SwitchToMode "locked"; }
         bind "x" { CloseFocus; SwitchToMode "locked"; }
         bind "z" { TogglePaneFrames; SwitchToMode "locked"; }
         bind "Tab" { SwitchFocus; }
     }
+
     tab {
         bind "Left" { GoToPreviousTab; }
         bind "Down" { GoToNextTab; }
@@ -56,6 +108,7 @@ keybinds clear-defaults=true {
         bind "x" { CloseTab; SwitchToMode "locked"; }
         bind "Tab" { ToggleTab; }
     }
+
     resize {
         bind "Left" { Resize "Increase left"; }
         bind "Down" { Resize "Increase down"; }
@@ -74,6 +127,7 @@ keybinds clear-defaults=true {
         bind "l" { Resize "Increase right"; }
         bind "r" { SwitchToMode "normal"; }
     }
+
     move {
         bind "Left" { MovePane "left"; }
         bind "Down" { MovePane "down"; }
@@ -88,6 +142,7 @@ keybinds clear-defaults=true {
         bind "p" { MovePaneBackwards; }
         bind "Tab" { MovePane; }
     }
+
     scroll {
         bind "Alt Left" { MoveFocusOrTab "left"; SwitchToMode "locked"; }
         bind "Alt Down" { MoveFocus "down"; SwitchToMode "locked"; }
@@ -101,6 +156,7 @@ keybinds clear-defaults=true {
         bind "Alt l" { MoveFocusOrTab "right"; SwitchToMode "locked"; }
         bind "s" { SwitchToMode "normal"; }
     }
+
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "n" { Search "down"; }
@@ -108,6 +164,7 @@ keybinds clear-defaults=true {
         bind "p" { Search "up"; }
         bind "w" { SearchToggleOption "Wrap"; }
     }
+
     session {
         bind "c" {
             LaunchOrFocusPlugin "configuration" {
@@ -133,6 +190,8 @@ keybinds clear-defaults=true {
             SwitchToMode "locked"
         }
     }
+
+    // ===== Shared Keybindings =====
     shared_among "normal" "locked" {
         bind "Alt Left" { MoveFocusOrTab "left"; }
         bind "Alt Down" { MoveFocus "down"; }
@@ -152,34 +211,44 @@ keybinds clear-defaults=true {
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
     }
+
     shared_except "locked" "renametab" "renamepane" {
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Ctrl q" { Quit; }
     }
+
     shared_except "locked" "entersearch" {
         bind "Enter" { SwitchToMode "locked"; }
     }
+
     shared_except "locked" "entersearch" "renametab" "renamepane" {
         bind "Esc" { SwitchToMode "locked"; }
     }
+
     shared_except "locked" "entersearch" "renametab" "renamepane" "move" {
         bind "m" { SwitchToMode "move"; }
     }
+
     shared_except "locked" "entersearch" "search" "renametab" "renamepane" "session" {
         bind "o" { SwitchToMode "session"; }
     }
+
     shared_except "locked" "tab" "entersearch" "renametab" "renamepane" {
         bind "t" { SwitchToMode "tab"; }
     }
+
     shared_except "locked" "tab" "scroll" "entersearch" "renametab" "renamepane" {
         bind "s" { SwitchToMode "scroll"; }
     }
+
     shared_among "normal" "resize" "tab" "scroll" "prompt" "tmux" {
         bind "p" { SwitchToMode "pane"; }
     }
+
     shared_except "locked" "resize" "pane" "tab" "entersearch" "renametab" "renamepane" {
         bind "r" { SwitchToMode "resize"; }
     }
+
     shared_among "scroll" "search" {
         bind "PageDown" { PageScrollDown; }
         bind "PageUp" { PageScrollUp; }
@@ -197,17 +266,21 @@ keybinds clear-defaults=true {
         bind "l" { PageScrollDown; }
         bind "u" { HalfPageScrollUp; }
     }
+
     entersearch {
         bind "Ctrl c" { SwitchToMode "scroll"; }
         bind "Esc" { SwitchToMode "scroll"; }
         bind "Enter" { SwitchToMode "search"; }
     }
+
     renametab {
         bind "Esc" { UndoRenameTab; SwitchToMode "tab"; }
     }
+
     shared_among "renametab" "renamepane" {
         bind "Ctrl c" { SwitchToMode "locked"; }
     }
+
     renamepane {
         bind "Esc" { UndoRenamePane; SwitchToMode "pane"; }
     }
