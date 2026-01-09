@@ -1,3 +1,7 @@
+[general]
+# Note: live_config_reload is now top-level or handled by Alacritty automatically
+live_config_reload = true
+
 # ===== Environment =====
 [env]
 TERM = "xterm-256color"
@@ -6,120 +10,53 @@ LANG = "en_US.UTF-8"
 LC_ALL = "en_US.UTF-8"
 
 # ===== Shell Configuration =====
-[shell]
+[terminal.shell]
 program = "zellij"
 # Optional: Pass arguments to shell
 # args = ["--session", "main"]
 
 # ===== Window Appearance =====
 [window]
-padding.x = 16
-padding.y = 14
 decorations = "none"
 opacity = 0.98
-
-# Dynamic title: shows current directory
 title = "Alacritty"
-class.general = "Alacritty"
-class.instance = "Alacritty"
 
-# Dimensions
-dimensions.columns = 120
-dimensions.lines = 40
+[window.padding]
+x = 16
+y = 14
 
-# Window position (optional)
-# position.x = 100
-# position.y = 100
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
 
-# ===== Scrollback & History =====
-[scrollback]
-# Keep 10,000 lines of history (default is 1,000)
-lines = 10000
-# Scroll to bottom when typing
-multiplier = 3
+[window.dimensions]
+columns = 120
+lines = 40
 
 # ===== Cursor Configuration =====
 [cursor]
-# Cursor style: Block, Underline, Beam
-style = "Beam"
 vi_mode_style = "Block"
 
-# Blinking cursor
-blinking = "On"
-blink_interval = 750  # milliseconds
+[cursor.style]
+shape = "Beam" # Note: Changed from 'style = "Beam"' to 'shape = "Beam"'
 
-# Hollow cursor option (shows text through it)
-# thickness = 0.15
-
-# ===== Font Configuration (if not in separate file) =====
+# ===== Font Configuration =====
 # [font]
-# normal.family = "CaskaydiaCove Nerd Font Mono"
-# normal.style = "Regular"
 # size = 12.0
-# offset.x = 0
-# offset.y = 2
+# offset = { x = 0, y = 2 }
+
+# [font.normal]
+# family = "CaskaydiaCove Nerd Font Mono"
+# style = "Regular"
 
 # ===== Colors & Selection =====
 [colors.selection]
-# Highlight color when selecting text
 text = "#000000"
 background = "#fffacd"
 
-# ===== Bell (Notification) Settings =====
-[bell]
-# Options: "None", "Visual", "Audible"
-animation = "EaseOutExpo"
-duration = 300
-
-# ===== Keyboard Bindings =====
-[keyboard]
-bindings = [
-    # ===== Window Control =====
-    { key = "F11", action = "ToggleFullscreen" }
-    { key = "F12", action = "ToggleViMode" }
-
-    # ===== Increase/Decrease Font Size =====
-    { key = "Plus", mods = "Control", action = "IncreaseFontSize" }
-    { key = "Equal", mods = "Control", action = "IncreaseFontSize" }
-    { key = "Minus", mods = "Control", action = "DecreaseFontSize" }
-    { key = "0", mods = "Control", action = "ResetFontSize" }
-
-    # ===== Copy/Paste (Vi Mode aware) =====
-    { key = "C", mods = "Control|Shift", action = "Copy" }
-    { key = "V", mods = "Control|Shift", action = "Paste" }
-
-    # ===== Search =====
-    { key = "F", mods = "Control|Shift", action = "SearchForward" }
-    { key = "B", mods = "Control|Shift", action = "SearchBackward" }
-
-    # ===== Clear Screen =====
-    { key = "L", mods = "Control", action = "ClearHistory" }
-
-    # ===== Vi Mode Bindings =====
-    { key = "V", mods = "Control|Shift", action = "ToggleViMode" }
-]
-
-# ===== Performance & Rendering =====
+# ===== Selection & Behavior =====
 [selection]
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\\t"
 save_to_clipboard = true
 
-[live_config_reload]
-enabled = true
-
-# ===== Alternative Shell (if not using Zellij) =====
-# [shell]
-# program = "/bin/bash"
-# args = ["-l", "-c", "tmux attach -t main || tmux"]
-
-# ===== Advanced: Program Execution Rules =====
-# Allow copying to system clipboard
-# [hints]
-# enabled = [
-#     {
-#         regex = "(https?://[^\\s]+)"
-#         command = "open"
-#         post_processing = true
-#         mouse.enabled = true
-#     }
-# ]
+[terminal]
